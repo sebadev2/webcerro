@@ -1,0 +1,48 @@
+---
+/**
+ * Logotipo oficial de la Municipalidad de Cerro Navia.
+ *
+ * El PNG original es azul marino (#00132f) sobre fondo transparente, así que
+ * funciona sobre el header blanco pero se perdería sobre el footer azul marino.
+ * Por eso hay una versión en blanco, generada con
+ * `scripts/generar-logo-blanco.ps1` a partir del mismo original.
+ */
+interface Props {
+  /** 'light' = para fondos oscuros (footer). 'dark' = para fondos claros (header). */
+  variant?: 'light' | 'dark'
+  /** Alto en píxeles. El ancho se mantiene la proporción original (185×95). */
+  height?: number
+  class?: string
+}
+
+const { variant = 'dark', height = 46, class: className } = Astro.props
+
+const src = variant === 'light' ? '/logo-cerro-navia-blanco.png' : '/logo-cerro-navia.png'
+const width = Math.round(height * (185 / 95))
+---
+
+<img
+  class:list={['logo', className]}
+  src={src}
+  alt="Municipalidad de Cerro Navia"
+  width={width}
+  height={height}
+  decoding="async"
+  style={`--logo-h:${height}px`}
+/>
+
+<style>
+  .logo {
+    display: block;
+    height: var(--logo-h);
+    width: auto;
+    object-fit: contain;
+    /* El logo trae su propio aire; en modo alto contraste se recorta el halo
+       del PNG para que no se vea el rectángulo claro alrededor. */
+    transition: filter 0.2s var(--ease);
+  }
+
+  :global(html[data-contrast='high']) .logo {
+    filter: contrast(1.4);
+  }
+</style>

@@ -1,0 +1,391 @@
+---
+import { navegacion } from '../data/site'
+import Icon from './Icon.astro'
+import Logo from './Logo.astro'
+---
+
+<header class="header" data-header>
+  <div class="container header__inner">
+    <a href="#inicio" class="header__brand" aria-label="Municipalidad de Cerro Navia, inicio">
+      <Logo />
+    </a>
+
+    <nav class="nav" aria-label="Menú principal" data-nav>
+      <ul class="nav__list">
+        {
+          navegacion.map((item) => (
+            <li class:list={['nav__item', { 'has-children': item.children }]}>
+              <a href={item.href} class="nav__link">
+                {item.label}
+                {item.children && <Icon name="chevron" size={15} class="nav__chev" />}
+              </a>
+
+              {item.children && (
+                <div class="mega">
+                  <div class="mega__grid">
+                    {item.children.map((col) => (
+                      <div class="mega__col">
+                        <p class="mega__title">{col.titulo}</p>
+                        <ul>
+                          {col.items.map((sub) => (
+                            <li>
+                              <a href={sub.href}>{sub.label}</a>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="header__actions">
+      <button type="button" class="icon-btn" data-search-toggle aria-expanded="false" aria-label="Buscar">
+        <Icon name="search" />
+      </button>
+      <a href="#pagos" class="btn btn--primary btn--sm header__cta">Pagar en línea</a>
+      <button
+        type="button"
+        class="icon-btn burger"
+        data-menu-toggle
+        aria-expanded="false"
+        aria-label="Abrir menú">
+        <span class="burger__box" data-burger><span></span><span></span><span></span></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Buscador desplegable -->
+  <div class="searchbar" data-searchbar hidden>
+    <div class="container searchbar__inner">
+      <form action="#" role="search">
+        <label class="visually-hidden" for="q">Buscar en el sitio</label>
+        <Icon name="search" size={20} />
+        <input id="q" name="q" type="search" placeholder="Buscar trámites, noticias, documentos…" />
+        <button class="btn btn--navy btn--sm" type="submit">Buscar</button>
+      </form>
+      <p class="searchbar__hint">
+        Sugerencias: <a href="#">patentes</a> · <a href="#">licencias</a> ·
+        <a href="#">subsidios</a> · <a href="#">pladeco</a>
+      </p>
+    </div>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--white);
+    border-bottom: 1px solid var(--grey-200);
+    transition: box-shadow 0.25s var(--ease);
+  }
+
+  /* Sombra sólo cuando la página ya ha scrolleado */
+  .header[data-stuck] {
+    box-shadow: var(--shadow);
+  }
+
+  .header__inner {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    min-height: var(--header-h);
+  }
+
+  .header__brand {
+    flex-shrink: 0;
+  }
+
+  /* ------------------------------- nav ------------------------------- */
+
+  .nav {
+    margin-left: auto;
+  }
+
+  .nav__list {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .nav__item {
+    position: relative;
+  }
+
+  .nav__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 10px 12px;
+    border-radius: var(--radius-sm);
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--grey-900);
+    white-space: nowrap;
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  }
+
+  .nav__link:hover,
+  .nav__item:focus-within > .nav__link {
+    background: var(--green-light);
+    color: var(--navy-900);
+  }
+
+  .nav__chev {
+    transition: transform 0.2s var(--ease);
+    opacity: 0.6;
+  }
+
+  .nav__item:hover .nav__chev,
+  .nav__item:focus-within .nav__chev {
+    transform: rotate(180deg);
+  }
+
+  /* ------------------------------ mega ------------------------------ */
+
+  .mega {
+    position: absolute;
+    top: calc(100% + 10px);
+    left: 50%;
+    translate: -50% 0;
+    min-width: 460px;
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-lg);
+    padding: 22px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: opacity 0.2s var(--ease), transform 0.2s var(--ease), visibility 0.2s;
+  }
+
+  .nav__item:hover .mega,
+  .nav__item:focus-within .mega {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .mega__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px 28px;
+  }
+
+  .mega__title {
+    font-size: 0.72rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--green-dark);
+    margin-bottom: 10px;
+  }
+
+  .mega__col a {
+    display: block;
+    padding: 6px 10px;
+    margin-left: -10px;
+    border-radius: var(--radius-sm);
+    font-size: 0.88rem;
+    color: var(--grey-700);
+    transition: background 0.15s var(--ease), color 0.15s var(--ease);
+  }
+
+  .mega__col a:hover {
+    background: var(--green-light);
+    color: var(--navy-900);
+  }
+
+  /* ---------------------------- acciones ----------------------------- */
+
+  .header__actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+
+  .icon-btn {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border: 1px solid var(--grey-200);
+    border-radius: var(--radius-sm);
+    background: var(--white);
+    color: var(--grey-900);
+    transition: background 0.2s var(--ease), border-color 0.2s var(--ease);
+  }
+
+  .icon-btn:hover {
+    background: var(--grey-100);
+    border-color: var(--grey-300);
+  }
+
+  .burger {
+    display: none;
+  }
+
+  .burger__box {
+    display: grid;
+    gap: 4px;
+  }
+
+  .burger__box span {
+    display: block;
+    width: 20px;
+    height: 2px;
+    background: currentColor;
+    border-radius: 2px;
+    transition: transform 0.25s var(--ease), opacity 0.2s var(--ease);
+  }
+
+  .burger[aria-expanded='true'] .burger__box span:nth-child(1) {
+    transform: translateY(6px) rotate(45deg);
+  }
+
+  .burger[aria-expanded='true'] .burger__box span:nth-child(2) {
+    opacity: 0;
+  }
+
+  .burger[aria-expanded='true'] .burger__box span:nth-child(3) {
+    transform: translateY(-6px) rotate(-45deg);
+  }
+
+  /* --------------------------- searchbar ---------------------------- */
+
+  .searchbar {
+    border-top: 1px solid var(--grey-200);
+    background: var(--grey-050);
+    padding-block: 18px;
+  }
+
+  .searchbar form {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: var(--radius-pill);
+    padding: 6px 6px 6px 18px;
+    max-width: 640px;
+  }
+
+  .searchbar form :global(svg) {
+    color: var(--grey-500);
+    flex-shrink: 0;
+  }
+
+  .searchbar input {
+    flex: 1;
+    border: 0;
+    background: transparent;
+    font: inherit;
+    padding: 8px 0;
+    min-width: 0;
+    color: var(--grey-900);
+  }
+
+  .searchbar input:focus {
+    outline: none;
+  }
+
+  .searchbar__hint {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: var(--grey-500);
+  }
+
+  .searchbar__hint a {
+    color: var(--navy-600);
+  }
+
+  /* --------------------------- responsive --------------------------- */
+
+  @media (max-width: 1080px) {
+    .nav {
+      position: fixed;
+      inset: var(--header-h) 0 0 auto;
+      width: min(360px, 88vw);
+      background: var(--white);
+      border-left: 1px solid var(--grey-200);
+      box-shadow: var(--shadow-lg);
+      padding: 18px;
+      overflow-y: auto;
+      transform: translateX(100%);
+      visibility: hidden;
+      transition: transform 0.28s var(--ease), visibility 0.28s;
+      z-index: 99;
+    }
+
+    .nav[data-open] {
+      transform: translateX(0);
+      visibility: visible;
+    }
+
+    .nav__list {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .nav__link {
+      width: 100%;
+      justify-content: space-between;
+      padding: 13px 12px;
+      border-bottom: 1px solid var(--grey-100);
+      border-radius: 0;
+    }
+
+    /* En móvil el megamenú se despliega en bloque */
+    .mega {
+      position: static;
+      translate: none;
+      min-width: 0;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      box-shadow: none;
+      border: 0;
+      border-left: 3px solid var(--green);
+      border-radius: 0;
+      margin: 4px 0 10px;
+      padding: 12px;
+      background: var(--grey-050);
+      display: none;
+    }
+
+    .nav__item[data-expanded] .mega {
+      display: block;
+    }
+
+    .nav__item[data-expanded] .nav__chev {
+      transform: rotate(180deg);
+    }
+
+    .mega__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .burger {
+      display: grid;
+    }
+
+    .header__cta {
+      display: none;
+    }
+
+    /* El logotipo oficial se reduce para dejar sitio a los controles */
+    .header__brand :global(.logo) {
+      height: 40px !important;
+    }
+  }
+</style>

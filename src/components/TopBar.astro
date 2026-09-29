@@ -1,0 +1,183 @@
+---
+import { legales, redes, municipio } from '../data/site'
+import Icon from './Icon.astro'
+---
+
+<div class="topbar">
+  <div class="container topbar__inner">
+    <p class="topbar__info">
+      <span><Icon name="clock" size={14} /> {municipio.horario}</span>
+      <a href={`tel:${municipio.telefono.replace(/\s/g, '')}`}>
+        <Icon name="phone" size={14} /> {municipio.telefono}
+      </a>
+    </p>
+
+    <nav class="topbar__legal" aria-label="Transparencia y acceso a la información">
+      {legales.slice(0, 4).map((l) => <a href={l.href}>{l.label}</a>)}
+    </nav>
+
+    <div class="topbar__side">
+      <div class="a11y" role="group" aria-label="Herramientas de accesibilidad">
+        <button type="button" data-font="md" aria-pressed="false" title="Tamaño de texto normal">A</button>
+        <button type="button" data-font="lg" aria-pressed="false" title="Aumentar texto">A+</button>
+        <button type="button" data-contrast aria-pressed="false" title="Alto contraste" aria-label="Alternar alto contraste">
+          <Icon name="accessibility" size={16} />
+        </button>
+        <button type="button" data-theme aria-pressed="false" title="Modo oscuro" aria-label="Alternar modo oscuro">
+          <Icon name="moon" size={16} />
+        </button>
+        <button type="button" data-grayscale aria-pressed="false" title="Escala de grises" aria-label="Alternar escala de grises">
+          <Icon name="eye" size={16} />
+        </button>
+      </div>
+      <ul class="social">
+        {
+          redes.map((r) => (
+            <li>
+              <a href={r.href} aria-label={r.label} title={r.label}>
+                <Icon name={r.icon} size={16} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</div>
+
+<style>
+  .topbar {
+    background: var(--navy-800);
+    color: var(--white);
+    font-size: 0.75rem;
+    min-height: var(--topbar-h);
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .topbar__inner {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+  }
+
+  .topbar__info {
+    display: flex;
+    gap: 14px;
+    margin: 0;
+    opacity: 0.9;
+    flex-shrink: 0;
+  }
+
+  .topbar__info span,
+  .topbar__info a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: inherit;
+    white-space: nowrap;
+  }
+
+  .topbar__info a:hover {
+    color: var(--green);
+  }
+
+  .topbar__legal {
+    display: flex;
+    gap: 14px;
+    margin-left: auto;
+    flex-wrap: nowrap;
+  }
+
+  .topbar__legal a {
+    color: rgba(255, 255, 255, 0.78);
+    white-space: nowrap;
+    border-bottom: 1px solid transparent;
+    transition: color 0.2s var(--ease), border-color 0.2s var(--ease);
+  }
+
+  .topbar__legal a:hover {
+    color: var(--green);
+    border-color: var(--green);
+  }
+
+  .topbar__side {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+
+  .a11y {
+    display: flex;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+
+  .a11y button {
+    background: transparent;
+    border: 0;
+    color: var(--white);
+    padding: 4px 9px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    line-height: 1.2;
+    display: inline-flex;
+    align-items: center;
+    transition: background 0.2s var(--ease);
+  }
+
+  .a11y button:hover {
+    background: rgba(255, 255, 255, 0.14);
+  }
+
+  .a11y button[aria-pressed='true'] {
+    background: var(--teal);
+    color: var(--navy-900);
+  }
+
+  .a11y button :global(svg) {
+    width: 14px;
+    height: 14px;
+  }
+
+  .social {
+    display: flex;
+    gap: 6px;
+  }
+
+  .social a {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: rgba(255, 255, 255, 0.8);
+    transition: background 0.2s var(--ease), color 0.2s var(--ease);
+  }
+
+  .social a:hover {
+    background: var(--green);
+    color: var(--navy-900);
+  }
+
+  /* Ocultar lo accesorio antes de que se vuelva un problema en pantallas chicas */
+  @media (max-width: 1160px) {
+    .topbar__legal {
+      display: none;
+    }
+  }
+
+  @media (max-width: 860px) {
+    .topbar__info {
+      display: none;
+    }
+
+    .topbar__inner {
+      justify-content: space-between;
+    }
+  }
+</style>

@@ -1,0 +1,123 @@
+---
+import { beneficios } from '../data/site'
+import Icon from './Icon.astro'
+---
+
+<section class="section" id="beneficios">
+  <div class="container">
+    <div class="section__head">
+      <div>
+        <h2 class="section__title">Beneficios y apoyos disponibles</h2>
+        <p class="section__lead">
+          Postulaciones, subsidios y programas sociales vigentes en la comuna.
+        </p>
+      </div>
+      <a href="#" class="link-more">Ver todos los beneficios <Icon name="arrow" size={18} /></a>
+    </div>
+
+    <ul class="grid">
+      {
+        beneficios.map((b) => (
+          <li class:list={['card', `card--${b.tono}`]}>
+            <div class="card__top">
+              <h3 class="card__title">{b.titulo}</h3>
+              <span class="badge">{b.meta}</span>
+            </div>
+            <p class="card__text">{b.texto}</p>
+            <a href="#" class="card__cta">
+              Postular o consultar
+              <Icon name="arrow" size={16} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 22px;
+  }
+
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 24px;
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-top: 4px solid var(--grey-300);
+    border-radius: var(--radius);
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease);
+  }
+
+  .card--verde {
+    border-top-color: var(--green);
+  }
+
+  .card--navy {
+    border-top-color: var(--navy-600);
+  }
+
+  .card--teal {
+    border-top-color: var(--teal);
+  }
+
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .card__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+  }
+
+  .card__title {
+    font-size: 1.05rem;
+    line-height: 1.3;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .badge {
+    flex-shrink: 0;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 5px 10px;
+    border-radius: var(--radius-pill);
+    background: var(--green-light);
+    color: var(--green-dark);
+    white-space: nowrap;
+  }
+
+  .card__text {
+    font-size: 0.9rem;
+    color: var(--grey-500);
+    flex: 1;
+  }
+
+  .card__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 700;
+    font-size: 0.88rem;
+    color: var(--navy-600);
+  }
+
+  .card__cta :global(svg) {
+    transition: transform 0.2s var(--ease);
+  }
+
+  .card__cta:hover :global(svg) {
+    transform: translateX(4px);
+  }
+</style>

@@ -1,0 +1,188 @@
+---
+import { servicios, programas } from '../data/site'
+import Icon from './Icon.astro'
+---
+
+<section class="section" id="servicios">
+  <div class="container">
+    <div class="section__head">
+      <div>
+        <h2 class="section__title">Oficinas y servicios municipales</h2>
+        <p class="section__lead">
+          Acceso directo a las áreas que atienden a la comunidad, la transparencia y la participación.
+        </p>
+      </div>
+      <a href="#" class="link-more">Ver todas las direcciones <Icon name="arrow" size={18} /></a>
+    </div>
+
+    <ul class="serv">
+      {
+        servicios.map((s) => (
+          <li>
+            <a href="#" class="serv__item">
+              <span class="serv__icon">
+                <Icon name={s.icon} size={22} />
+              </span>
+              <span class="serv__txt">
+                <b>{s.titulo}</b>
+                <small>{s.texto}</small>
+              </span>
+              <Icon name="arrow" size={16} class="serv__go" />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<section class="section section--alt">
+  <div class="container">
+    <div class="section__head">
+      <div>
+        <h2 class="section__title">Programas destacados</h2>
+        <p class="section__lead">Servicios que la municipalidad pone a disposición de los vecinos.</p>
+      </div>
+    </div>
+
+    <ul class="prog">
+      {
+        programas.map((p) => (
+          <li>
+            <a href="#" class="prog__item">
+              <span class="prog__icon">
+                <Icon name={p.icon} size={26} />
+              </span>
+              <b>{p.titulo}</b>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .serv {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 14px;
+  }
+
+  .serv__item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 100%;
+    padding: 16px 18px;
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: var(--radius);
+    color: var(--grey-900);
+    transition: border-color 0.2s var(--ease), transform 0.2s var(--ease),
+      box-shadow 0.2s var(--ease);
+  }
+
+  .serv__item:hover {
+    border-color: var(--green);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+
+  .serv__icon {
+    display: grid;
+    place-items: center;
+    width: 46px;
+    height: 46px;
+    border-radius: var(--radius-sm);
+    background: var(--navy-900);
+    color: var(--green);
+    flex-shrink: 0;
+    transition: background 0.2s var(--ease);
+  }
+
+  .serv__item:hover .serv__icon {
+    background: var(--green);
+    color: var(--navy-900);
+  }
+
+  .serv__txt {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;
+    flex: 1;
+  }
+
+  .serv__txt b {
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .serv__txt small {
+    font-size: 0.8rem;
+    color: var(--grey-500);
+    line-height: 1.35;
+  }
+
+  .serv__go {
+    color: var(--grey-300);
+    flex-shrink: 0;
+    transition: transform 0.2s var(--ease), color 0.2s var(--ease);
+  }
+
+  .serv__item:hover .serv__go {
+    transform: translateX(3px);
+    color: var(--green-dark);
+  }
+
+  /* ------------------------------ programas ------------------------------ */
+
+  .prog {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 16px;
+  }
+
+  .prog__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    padding: 26px 18px;
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: var(--radius);
+    color: var(--grey-900);
+    font-size: 0.92rem;
+    font-weight: 700;
+    transition: transform 0.25s var(--ease), box-shadow 0.25s var(--ease),
+      border-color 0.25s var(--ease);
+  }
+
+  .prog__item:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: transparent;
+  }
+
+  .prog__icon {
+    display: grid;
+    place-items: center;
+    width: 58px;
+    height: 58px;
+    border-radius: 50%;
+    background: var(--green-light);
+    color: var(--green-dark);
+    transition: background 0.25s var(--ease), color 0.25s var(--ease),
+      transform 0.25s var(--ease);
+  }
+
+  .prog__item:hover .prog__icon {
+    background: var(--green);
+    color: var(--navy-900);
+    transform: scale(1.06);
+  }
+</style>

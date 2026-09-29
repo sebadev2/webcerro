@@ -1,0 +1,120 @@
+---
+import { cifras } from '../data/site'
+import Icon from './Icon.astro'
+---
+
+<section class="cifras" aria-labelledby="cifras-t">
+  <div class="container">
+    <div class="cifras__head">
+      <h2 class="cifras__title" id="cifras-t">
+        <Icon name="map" size={22} />
+        Cerro Navia en cifras
+      </h2>
+      <p>Datos de la comuna para conocerla mejor.</p>
+    </div>
+
+    <ul class="cifras__grid">
+      {
+        cifras.map((c) => (
+          <li class="cifra">
+            <p class="cifra__valor">
+              {c.valor}
+              {c.unidad && <span class="cifra__unidad">{c.unidad}</span>}
+            </p>
+            <p class="cifra__label">{c.label}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>
+
+<style>
+  .cifras {
+    background: var(--navy-900);
+    color: var(--white);
+    padding-block: clamp(40px, 5vw, 60px);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cifras::before {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 70%;
+    background: rgba(56, 186, 166, 0.08);
+    clip-path: polygon(0 100%, 0 60%, 20% 22%, 40% 56%, 60% 14%, 80% 52%, 100% 28%, 100% 100%);
+  }
+
+  .cifras__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    margin-bottom: 32px;
+    position: relative;
+  }
+
+  .cifras__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: clamp(1.3rem, 2vw, 1.6rem);
+    font-weight: 800;
+    letter-spacing: -0.02em;
+  }
+
+  .cifras__title :global(svg) {
+    color: var(--green);
+  }
+
+  .cifras__head p {
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 0.92rem;
+  }
+
+  .cifras__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    position: relative;
+  }
+
+  .cifra {
+    padding: 20px;
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: background 0.25s var(--ease), transform 0.25s var(--ease);
+  }
+
+  .cifra:hover {
+    background: rgba(56, 186, 166, 0.16);
+    transform: translateY(-3px);
+  }
+
+  .cifra__valor {
+    font-size: clamp(1.8rem, 3.2vw, 2.4rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--green);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .cifra__unidad {
+    font-size: 0.45em;
+    font-weight: 700;
+    margin-left: 4px;
+    color: var(--teal);
+  }
+
+  .cifra__label {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.72);
+    line-height: 1.35;
+  }
+</style>

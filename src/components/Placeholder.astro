@@ -1,0 +1,79 @@
+---
+/**
+ * Bloque de imagen decorativo. Sustituye a las fotografías reales: mantiene la
+ * maqueta legible sin depender de assets externos.
+ */
+import Icon from './Icon.astro'
+
+interface Props {
+  tono?: 'navy' | 'verde' | 'teal'
+  icon?: string
+  alto?: string
+  etiqueta?: string
+  class?: string
+}
+
+const { tono = 'navy', icon = 'map', alto = '200px', etiqueta, class: className } = Astro.props
+---
+
+<div class:list={['ph', `ph--${tono}`, className]} style={`--ph-alto:${alto}`}>
+  <span class="ph__glow" aria-hidden="true"></span>
+  <Icon name={icon} size={44} class="ph__icon" />
+  {etiqueta && <span class="ph__label">{etiqueta}</span>}
+</div>
+
+<style>
+  .ph {
+    position: relative;
+    overflow: hidden;
+    display: grid;
+    place-items: center;
+    min-height: var(--ph-alto);
+    background: linear-gradient(140deg, #00132f 0%, #0b2450 100%);
+    isolation: isolate;
+  }
+
+  .ph--verde {
+    background: linear-gradient(140deg, #05302a 0%, #0b5a4e 100%);
+  }
+
+  .ph--teal {
+    background: linear-gradient(140deg, #00201f 0%, #0b6157 100%);
+  }
+
+  .ph__glow {
+    position: absolute;
+    inset: auto -20% -55% auto;
+    width: 70%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.22), transparent 65%);
+  }
+
+  /* Silueta de cerros, coherente con la identidad del comuna */
+  .ph::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 58%;
+    background: rgba(0, 19, 47, 0.42);
+    clip-path: polygon(0 100%, 0 66%, 22% 30%, 42% 60%, 62% 20%, 82% 56%, 100% 34%, 100% 100%);
+    z-index: -1;
+  }
+
+  .ph__icon {
+    color: rgba(255, 255, 255, 0.9);
+    filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
+  }
+
+  .ph__label {
+    position: absolute;
+    bottom: 12px;
+    left: 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(255, 255, 255, 0.9);
+  }
+</style>

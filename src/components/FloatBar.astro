@@ -1,0 +1,115 @@
+---
+import Icon from './Icon.astro'
+---
+
+<!-- Barra flotante persistente: patrón de Las Condes, con etiquetas visibles -->
+<aside class="float" aria-label="Accesos rápidos">
+  <a href="#" class="float__item float__item--wa">
+    <span class="float__icon"><Icon name="whatsapp" size={22} /></span>
+    <span class="float__label">WhatsApp<small>Contacta a la muni</small></span>
+  </a>
+
+  <a href="#tramites" class="float__item">
+    <span class="float__icon"><Icon name="document" size={22} /></span>
+    <span class="float__label">Trámites<small>En línea</small></span>
+  </a>
+
+  <a href="#servicios" class="float__item">
+    <span class="float__icon"><Icon name="user" size={22} /></span>
+    <span class="float__label">Soy vecino<small>Oficinas</small></span>
+  </a>
+</aside>
+
+<style>
+  .float {
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+    z-index: 90;
+    display: grid;
+    gap: 10px;
+  }
+
+  .float__item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--white);
+    border: 1px solid var(--grey-200);
+    border-radius: var(--radius-pill);
+    padding: 8px 18px 8px 8px;
+    box-shadow: var(--shadow-lg);
+    color: var(--grey-900);
+    transition: transform 0.2s var(--ease), box-shadow 0.2s var(--ease),
+      border-color 0.2s var(--ease);
+  }
+
+  .float__item:hover {
+    transform: translateY(-2px) translateX(-2px);
+    border-color: var(--green);
+  }
+
+  .float__icon {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--navy-900);
+    color: var(--green);
+    flex-shrink: 0;
+  }
+
+  .float__item--wa .float__icon {
+    background: #25d366;
+    color: var(--white);
+  }
+
+  .float__item:hover .float__icon {
+    background: var(--green);
+    color: var(--navy-900);
+  }
+
+  .float__item--wa:hover .float__icon {
+    background: #128c4a;
+    color: var(--white);
+  }
+
+  .float__label {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.25;
+    font-weight: 700;
+    font-size: 0.88rem;
+    white-space: nowrap;
+  }
+
+  .float__label small {
+    font-weight: 500;
+    font-size: 0.72rem;
+    color: var(--grey-500);
+  }
+
+  /* En pantallas chicas la barra estorba (tapa el botón "Buscar" del panel
+     rápido), así que queda sólo WhatsApp: los otros dos accesos ya están
+     presentes en la propia página. */
+  @media (max-width: 620px) {
+    .float {
+      right: 14px;
+      bottom: 14px;
+    }
+
+    .float__item:not(.float__item--wa) {
+      display: none;
+    }
+
+    .float__label {
+      display: none;
+    }
+
+    .float__item {
+      padding: 9px;
+      border-radius: 50%;
+    }
+  }
+</style>

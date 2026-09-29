@@ -1,0 +1,96 @@
+---
+import Icon from './Icon.astro'
+---
+
+<section class="newsletter">
+  <div class="container newsletter__inner">
+    <div class="newsletter__text">
+      <h2 class="newsletter__title">Recibe las noticias de Cerro Navia</h2>
+      <p class="newsletter__desc">Suscríbete a nuestro newsletter y recibe las últimas noticias, eventos y actividades de la comuna.</p>
+    </div>
+    <form class="newsletter__form" action="#" method="post">
+      <label class="visually-hidden" for="newsletter-email">Correo electrónico</label>
+      <input id="newsletter-email" type="email" placeholder="Tu correo electrónico" required />
+      <button type="submit" class="btn btn--primary">
+        Suscribirme
+        <Icon name="arrow" size={18} />
+      </button>
+    </form>
+  </div>
+</section>
+
+<style>
+  .newsletter {
+    background: var(--navy-800);
+    color: var(--white);
+    padding-block: clamp(40px, 5vw, 56px);
+  }
+
+  .newsletter__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .newsletter__title {
+    font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+    font-weight: 800;
+    margin-bottom: 8px;
+    letter-spacing: -0.02em;
+  }
+
+  .newsletter__desc {
+    color: rgba(255, 255, 255, 0.75);
+    font-size: 0.95rem;
+    margin: 0;
+    max-width: 48ch;
+  }
+
+  .newsletter__form {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .newsletter__form input {
+    padding: 12px 18px;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--white);
+    font: inherit;
+    min-width: 260px;
+    transition: border-color 0.2s var(--ease);
+  }
+
+  .newsletter__form input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+  }
+
+  .newsletter__form input:focus {
+    outline: none;
+    border-color: var(--green);
+  }
+
+  .newsletter__form .btn {
+    padding: 12px 24px;
+  }
+
+  @media (max-width: 720px) {
+    .newsletter__inner {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .newsletter__form {
+      width: 100%;
+    }
+
+    .newsletter__form input {
+      flex: 1;
+      min-width: 0;
+    }
+  }
+</style>

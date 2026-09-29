@@ -1,0 +1,23 @@
+{
+  "name": "cerro-navia",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Maqueta de la portada de la Municipalidad de Cerro Navia — Astro",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "verificar:overflow": "node scripts/measure.mjs",
+    "verificar:interacciones": "node scripts/interacciones.mjs",
+    "verificar:contraste": "node scripts/contraste.mjs",
+    "capturas": "node scripts/capturas.mjs"
+  },
+  "dependencies": {
+    "astro": "^7.3.5"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}

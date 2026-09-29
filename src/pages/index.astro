@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+import TopBar from '../components/TopBar.astro'
+import Header from '../components/Header.astro'
+import Hero from '../components/Hero.astro'
+import Noticias from '../components/Noticias.astro'
+import Eventos from '../components/Eventos.astro'
+import Revista from '../components/Revista.astro'
+import Cifras from '../components/Cifras.astro'
+import Servicios from '../components/Servicios.astro'
+import Beneficios from '../components/Beneficios.astro'
+import Comunidad from '../components/Comunidad.astro'
+import Newsletter from '../components/Newsletter.astro'
+import Footer from '../components/Footer.astro'
+import FloatBar from '../components/FloatBar.astro'
+---
+
+<BaseLayout title="Municipalidad de Cerro Navia | Inicio">
+  <TopBar />
+  <Header />
+
+  <main id="contenido">
+    <Hero />
+    <Noticias />
+    <Eventos />
+    <Revista />
+    <Cifras />
+    <Servicios />
+    <Beneficios />
+    <Comunidad />
+    <Newsletter />
+  </main>
+
+  <Footer />
+  <FloatBar />
+</BaseLayout>

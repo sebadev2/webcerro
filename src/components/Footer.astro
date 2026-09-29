@@ -1,0 +1,366 @@
+---
+import { municipio, redes, legales, utiles } from '../data/site'
+import Icon from './Icon.astro'
+import Logo from './Logo.astro'
+
+const cols = [
+  {
+    titulo: 'La comuna',
+    items: ['Historia de la comuna', 'Cerro Navia en cifras', 'Los 17 cerros', 'Unidades vecinales', 'Plan de Gobierno 2024-2028', 'PLADECO 2023-2030'],
+  },
+  {
+    titulo: 'Municipalidad',
+    items: ['Alcalde', 'Concejo Municipal', 'Sesiones del Concejo', 'Organigrama', 'Direcciones', 'Empleo y capacitación'],
+  },
+  {
+    titulo: 'Servicios',
+    items: ['Trámites en línea', 'Pagar en línea', 'Fiscalía Popular', 'Farmacia Popular', 'Óptica Popular', 'Clínica Veterinaria'],
+  },
+]
+
+const canales = [
+  { label: 'Galería de fotos', href: '#', icon: 'camera' },
+  { label: 'YouTube Municipal', href: '#', icon: 'youtube' },
+  { label: 'Streaming Concejo', href: '#', icon: 'video' },
+  { label: 'Radio Bellavista', href: '#', icon: 'radio' },
+]
+---
+
+<footer class="footer">
+  <div class="container footer__grid">
+    <div class="footer__brand">
+      <Logo variant="light" height={54} />
+      <p class="footer__desc">
+        {municipio.nombre}, creada el {municipio.fundacion}. Trabajamos con y por la comunidad
+        de los 17 cerros de la comuna.
+      </p>
+      <ul class="footer__social">
+        {
+          redes.map((r) => (
+            <li>
+              <a href={r.href} aria-label={r.label}>
+                <Icon name={r.icon} size={18} />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    {
+      cols.map((c) => (
+        <nav aria-label={c.titulo}>
+          <p class="footer__title">{c.titulo}</p>
+          <ul class="footer__list">
+            {c.items.map((i) => (
+              <li>
+                <a href="#">{i}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))
+    }
+
+    <div class="footer__contact">
+      <p class="footer__title">Contacto</p>
+      <address>
+        <a href={`tel:${municipio.telefono.replace(/\s/g, '')}`}>
+          <Icon name="phone" size={16} /> {municipio.telefono}
+        </a>
+        <a href={`mailto:${municipio.email}`}>
+          <Icon name="mail" size={16} /> {municipio.email}
+        </a>
+        <span><Icon name="pin" size={16} /> {municipio.direccion}</span>
+        <span><Icon name="clock" size={16} /> {municipio.horario}</span>
+      </address>
+      <p class="footer__alcalde">
+        <b>Alcalde {municipio.alcalde}</b>
+      </p>
+    </div>
+
+    <div class="footer__utiles">
+      <p class="footer__title">Teléfonos útiles</p>
+      <ul class="footer__list">
+        {
+          utiles.map((u) => (
+            <li>
+              <a href={`tel:${u.telefono.replace(/\s/g, '')}`}>
+                <Icon name="phone" size={14} />
+                <span>
+                  <b>{u.entidad}</b>
+                  <small>{u.detalle} · {u.telefono}</small>
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="footer__canales">
+      <p class="footer__title">Canales digitales</p>
+      <ul class="footer__list">
+        {
+          canales.map((c) => (
+            <li>
+              <a href={c.href}>
+                <Icon name={c.icon} size={16} />
+                {c.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer__legal">
+    <div class="container footer__legal-inner">
+      <p>© {new Date().getFullYear()} {municipio.nombre}. Todos los derechos reservados.</p>
+      <ul>
+        {legales.slice(0, 3).map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        <li><a href="#">Términos de uso</a></li>
+        <li><a href="#">Privacidad</a></li>
+      </ul>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: var(--navy-900);
+    color: rgba(255, 255, 255, 0.72);
+    padding-top: clamp(48px, 6vw, 72px);
+    font-size: 0.9rem;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1.6fr 1fr 1fr 1fr 1.3fr 1.2fr 1fr;
+    gap: 32px;
+    padding-bottom: 44px;
+  }
+
+  .footer :global(.logo) {
+    /* El pie es azul marino: aquí va la versión en blanco del logotipo. */
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
+  }
+
+  .footer__desc {
+    margin-top: 16px;
+    max-width: 34ch;
+    line-height: 1.6;
+  }
+
+  .footer__social {
+    display: flex;
+    gap: 8px;
+    margin-top: 18px;
+  }
+
+  .footer__social a {
+    display: grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: var(--white);
+    transition: background 0.2s var(--ease), border-color 0.2s var(--ease),
+      color 0.2s var(--ease);
+  }
+
+  .footer__social a:hover {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--navy-900);
+  }
+
+  .footer__title {
+    color: var(--white);
+    font-weight: 800;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+    margin-bottom: 14px;
+  }
+
+  .footer__title::after {
+    content: '';
+    display: block;
+    width: 26px;
+    height: 3px;
+    border-radius: 2px;
+    background: var(--green);
+    margin-top: 8px;
+  }
+
+  .footer__list {
+    display: grid;
+    gap: 9px;
+  }
+
+  .footer__list a {
+    color: rgba(255, 255, 255, 0.72);
+    transition: color 0.2s var(--ease);
+  }
+
+  .footer__list a:hover {
+    color: var(--green);
+  }
+
+  .footer__contact address {
+    display: grid;
+    gap: 11px;
+    font-style: normal;
+    margin-bottom: 18px;
+  }
+
+  .footer__contact address :is(a, span) {
+    display: flex;
+    align-items: flex-start;
+    gap: 9px;
+    line-height: 1.45;
+  }
+
+  .footer__contact address :global(svg) {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--teal);
+  }
+
+  .footer__contact a:hover {
+    color: var(--green);
+  }
+
+  .footer__alcalde {
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
+  .footer__alcalde b {
+    color: var(--white);
+    font-size: 0.86rem;
+  }
+
+  .footer__utiles .footer__list a {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.72);
+    transition: color 0.2s var(--ease);
+  }
+
+  .footer__utiles .footer__list a:hover {
+    color: var(--green);
+  }
+
+  .footer__utiles .footer__list :global(svg) {
+    flex-shrink: 0;
+    margin-top: 2px;
+    color: var(--teal);
+  }
+
+  .footer__utiles .footer__list b {
+    display: block;
+    color: var(--white);
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .footer__utiles .footer__list small {
+    display: block;
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-top: 2px;
+  }
+
+  .footer__canales .footer__list a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(255, 255, 255, 0.72);
+    transition: color 0.2s var(--ease);
+  }
+
+  .footer__canales .footer__list a:hover {
+    color: var(--green);
+  }
+
+  .footer__canales .footer__list :global(svg) {
+    color: var(--teal);
+    flex-shrink: 0;
+  }
+
+  .footer__legal {
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding-block: 18px;
+    /* Deja espacio para que la barra flotante no tape la última línea */
+    padding-bottom: 86px;
+  }
+
+  .footer__legal-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+  }
+
+  .footer__legal-inner p {
+    margin: 0;
+  }
+
+  .footer__legal-inner ul {
+    display: flex;
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+
+  .footer__legal-inner a:hover {
+    color: var(--green);
+  }
+
+  @media (max-width: 1200px) {
+    .footer__grid {
+      grid-template-columns: 1.6fr 1fr 1fr 1fr 1.3fr;
+    }
+
+    .footer__utiles,
+    .footer__canales {
+      grid-column: span 2;
+    }
+  }
+
+  @media (max-width: 1000px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    .footer__brand {
+      grid-column: 1 / -1;
+    }
+
+    .footer__utiles,
+    .footer__canales {
+      grid-column: auto;
+    }
+  }
+
+  @media (max-width: 620px) {
+    .footer__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+
+    .footer__contact,
+    .footer__utiles,
+    .footer__canales {
+      grid-column: 1 / -1;
+    }
+  }
+</style>
